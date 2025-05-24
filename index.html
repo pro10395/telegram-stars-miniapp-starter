@@ -12,8 +12,15 @@
       text-align: center;
       padding: 40px 20px;
     }
+    h1 {
+      color: #222;
+    }
+    p {
+      font-size: 18px;
+      margin-bottom: 30px;
+    }
     button {
-      padding: 12px 24px;
+      padding: 14px 28px;
       font-size: 18px;
       background-color: #0088cc;
       color: white;
@@ -28,8 +35,8 @@
 </head>
 <body>
   <h1>Доступ к программе «12 недель»</h1>
-  <p>Оплатите 999 звёзд, чтобы получить доступ к Telegram-группе</p>
-  <button id="pay-button">Оплатить</button>
+  <p>Оплатите <strong>1300 звёзд</strong> (~6000₽), чтобы получить доступ к Telegram-группе</p>
+  <button id="pay-button">Оплатить через Telegram Stars</button>
 
   <script>
     const tg = window.Telegram.WebApp;
@@ -37,8 +44,8 @@
 
     document.getElementById("pay-button").addEventListener("click", () => {
       tg.openInvoice({
-        slug: "your_invoice_slug", // ЗАМЕНИ ЭТО
-        callback_url: "https://t.me/your_bot?start=paid"
+        slug: "TwelveWeeksBot",
+        callback_url: "https://t.me/TwelveWeeksBot?start=paid"
       });
     });
   </script>
