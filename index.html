@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>12 недель</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      background: #f7f7f7;
+      font-family: sans-serif;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 18px;
+      background-color: #0088cc;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #006ea1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Доступ к программе «12 недель»</h1>
+  <p>Оплатите 999 звёзд, чтобы получить доступ к Telegram-группе</p>
+  <button id="pay-button">Оплатить</button>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    document.getElementById("pay-button").addEventListener("click", () => {
+      tg.openInvoice({
+        slug: "your_invoice_slug", // ЗАМЕНИ ЭТО
+        callback_url: "https://t.me/your_bot?start=paid"
+      });
+    });
+  </script>
+</body>
+</html>
