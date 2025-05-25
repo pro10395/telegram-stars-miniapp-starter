@@ -38,20 +38,19 @@
   <p>Оплатите <strong>1300 звёзд</strong> (~6000₽), чтобы получить доступ к Telegram-группе</p>
   <button id="pay-button">Оплатить через Telegram Stars</button>
 
- <script>
-  const tg = window.Telegram.WebApp;
-  tg.expand();
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
 
-  document.getElementById("pay-button").addEventListener("click", () => {
-    fetch("https://telegram-stars-worker.pro103.workers.dev", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        chat_id: tg.initDataUnsafe.user.id
-      })
+    document.getElementById("pay-button").addEventListener("click", () => {
+      fetch("https://telegram-stars-worker.pro103.workers.dev", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: tg.initDataUnsafe?.user?.id
+        })
+      });
     });
-  });
-</script>
-
+  </script>
 </body>
 </html>
