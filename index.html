@@ -10,15 +10,10 @@
       background: #f7f7f7;
       font-family: sans-serif;
       text-align: center;
-      padding: 40px 20px;
+      padding: 20px;
     }
-    h1 {
-      color: #222;
-    }
-    p {
-      font-size: 18px;
-      margin-bottom: 30px;
-    }
+    h1 { color: #222; }
+    p { font-size: 18px; margin-bottom: 20px; }
     button {
       padding: 14px 28px;
       font-size: 18px;
@@ -27,9 +22,20 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      margin-bottom: 20px;
     }
-    button:hover {
-      background-color: #006ea1;
+    button:hover { background-color: #006ea1; }
+    #debug {
+      background: #fff;
+      color: #000;
+      text-align: left;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      max-height: 200px;
+      overflow-y: auto;
+      font-family: monospace;
+      white-space: pre-wrap;
     }
   </style>
 </head>
@@ -38,18 +44,31 @@
   <p>Оплатите <strong>1300 звёзд</strong> (~6000₽), чтобы получить доступ к Telegram-группе</p>
   <button id="pay-button">Оплатить через Telegram Stars</button>
 
+  <div id="debug">Лог отладки:</div>
+
   <script>
     const tg = window.Telegram.WebApp;
     tg.expand();
 
+    const log = msg => {
+      const d = document.getElementById("debug");
+      d.textContent += "\n" + msg;
+    };
+
+    log("initDataUnsafe: " + JSON.stringify(tg.initDataUnsafe));
+
     document.getElementById("pay-button").addEventListener("click", () => {
+      const chatId = tg.initDataUnsafe?.user?.id;
+      log("chat_id from Telegram: " + chatId);
+
       fetch("https://telegram-stars-worker.pro103.workers.dev", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          chat_id: tg.initDataUnsafe?.user?.id
-        })
-      });
+        body: JSON.stringify({ chat_id: chatId })
+      })
+      .then(res => res.text()
+        .then(text => log("Worker response: " + text)))
+      .catch(err => log("Fetch error: " + err));
     });
   </script>
 </body>
